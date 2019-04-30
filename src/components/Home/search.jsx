@@ -17,7 +17,7 @@ class search extends Component {
  
   
     getMovieByTitle(title) {
-        fetch('http://localhost:4567/api/v1/movie-search/' + title)
+        fetch('https://gentle-temple-25159.herokuapp.com/api/v1/movie-search/' + title)
             .then(response => response.json())
             .then(movieData => {
                 this.setState({ movieData });

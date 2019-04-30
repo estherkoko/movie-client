@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Bin from './../../assets/images/bin.png';
 import NoPoster from './../../assets/images/poster.png';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class home extends Component {
 
@@ -9,11 +10,15 @@ class home extends Component {
     this.state = {
       rating: '',
       comment: '',
-      movieData: {},
+      movieData: {
+        Title: ''
+      },
       movies: [],
       movieName: '',
       img: NoPoster,
-      isNewMovie: false
+      isNewMovie: false,
+      modal: false,
+      modalInfo: ''
     };
 
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -21,11 +26,26 @@ class home extends Component {
     this.handleDeleteMovies = this.handleDeleteMovies.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
+
+  toggle() {
+    this.setState(prevState => ({
+     modal: !prevState.modal
+    }));
+  }
+  
   handleSubmit(event) {
     this.getMovieByTitle(this.state.movieName.toLowerCase());
     event.preventDefault();
   }
+  modalHandler(modalStatus, durationBeforeHiding, modalBodyDescription) {
+    this.setState({ modal: modalStatus, modalInfo: modalBodyDescription });
+    setTimeout(function () {
+      this.setState({ modal: false });
+    }.bind(this), durationBeforeHiding);
+  }
+
   handleMovieDataChange(event) {
     this.setState({ value: event.target.value });
   }
@@ -58,7 +78,7 @@ class home extends Component {
       data.id = this.state.movieData._id.$oid;
     }
 
-    fetch('http://localhost:4567/api/v1/movies', {
+    fetch('https://gentle-temple-25159.herokuapp.com/api/v1/movies', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -75,7 +95,7 @@ class home extends Component {
   }
 
   getMovieByTitle(title) {
-    fetch('http://localhost:4567/api/v1/movie-search/' + title)
+    fetch('https://gentle-temple-25159.herokuapp.com/api/v1/movie-search/' + title)
       .then(response => response.json())
       .then(movieData => {
         this.setState({ movieData });
@@ -83,17 +103,19 @@ class home extends Component {
           this.setState(
             { rating: movieData.rating, 
               comment: movieData.comment, 
-              isNewMovie: false 
+              isNewMovie: false
             }
           );
+          this.modalHandler(true, 5000, "Movie existed in the database");
         } else {
           this.setState(
             {
               rating: '',
               comment: '',
-              isNewMovie: true 
+              isNewMovie: true
             }
           );
+          this.modalHandler(true, 5000, "Movie was not in the database, new information retrieved from OMDB");
         }
         if (movieData.Poster === "N/A") {
           this.setState({ img: NoPoster })
@@ -107,7 +129,7 @@ class home extends Component {
   deleteMovie() {
     let data = {};
     data.Title = this.state.movieData.Title.toLowerCase();
-    fetch('http://localhost:4567/api/v1/movies', {
+    fetch('https://gentle-temple-25159.herokuapp.com/api/v1/movies', {
       method: 'DELETE',
       body: JSON.stringify(data),
     }).then(res => res.json())
@@ -120,9 +142,14 @@ class home extends Component {
 
   render() {
     const isNewMovie = this.state.isNewMovie;
+    const hasMovie = (this.state.movieData.Title !== '');
 
     return (
       <div>
+        <Modal isOpen={this.state.modal}>
+          <ModalHeader toggle={this.toggle}>Alert!!</ModalHeader>
+          <ModalBody>{this.state.modalInfo}</ModalBody>
+        </Modal>
         <form onSubmit={this.handleSubmit}>
           <div className="input-group mb-3 pb-3">
             <input className="form-control py-2 pt-4 pb-4 pr-6 border-right-0 border" value={this.state.movieName} onChange={this.handleInputChange('movieName')} placeholder="Find a movie" type="search" />
@@ -133,20 +160,22 @@ class home extends Component {
             </span>
           </div>
         </form>
-        <div className="row">
-          <div className="col-md-4">
-            <img src={this.state.img} alt="poster" class="img-fluid"/>
-            <button className="btn btn-lg btn-dark text-white type mt-3 px-5 pt-2" onClick={this.handleUpdate}>{isNewMovie ? 'Save' : 'Update'} Movie</button>
-            <button className="btn btn-lg btn-dark text-white type mt-3 px-5 pt-2" onClick={this.handleDeleteMovies}>Delete Movie</button>
-          </div>
-          <div className="col-md-8 text-left">
-            <h2 className="capitalize">{this.state.movieData.Title}<span onClick={this.handleDeleteMovies}><img src={Bin} alt="bin" height="25px" /></span></h2>
-            <h5 className="text-muted w-75">{this.state.movieData.Plot} <span className="text-primary"> {this.state.movieData.Year}</span></h5>
-            <h5 className="text-muted">{this.state.movieData.comments}</h5>
-            <div className="w-50 pt-5">
-              <h4 className="text-muted">Other Details:</h4>
-              <input type="text" className="form-control mb-3" value={this.state.rating} placeholder="Ratings" onChange={this.handleInputChange('rating')} />
-              <textarea className="form-control pb-5" aria-label="With textarea" type="text" value={this.state.comment} placeholder="Comments" onChange={this.handleInputChange('comment')}></textarea>
+        <div className={hasMovie ? '' : 'd-none'}>
+          <div className="row" >
+            <div className="col-md-4">
+              <img src={this.state.img} alt="poster" class="img-fluid"/>
+              <button className="btn btn-lg btn-dark text-white type mt-3 px-5 pt-2" onClick={this.handleUpdate}>{isNewMovie ? 'Save' : 'Update'} Movie</button>
+              <button className="btn btn-lg btn-dark text-white type mt-3 px-5 pt-2" onClick={this.handleDeleteMovies}>Delete Movie</button>
+            </div>
+            <div className="col-md-8 text-left">
+              <h2 className="capitalize">{this.state.movieData.Title}<span onClick={this.handleDeleteMovies}><img src={Bin} alt="bin" height="25px" /></span></h2>
+              <h5 className="text-muted w-75">{this.state.movieData.Plot} <span className="text-primary"> {this.state.movieData.Year}</span></h5>
+              <h5 className="text-muted">{this.state.movieData.comments}</h5>
+              <div className="w-50 pt-5">
+                <h4 className="text-muted">Other Details:</h4>
+                <input type="text" className="form-control mb-3" value={this.state.rating} placeholder="Ratings" onChange={this.handleInputChange('rating')} />
+                <textarea className="form-control pb-5" aria-label="With textarea" type="text" value={this.state.comment} placeholder="Comments" onChange={this.handleInputChange('comment')}></textarea>
+              </div>
             </div>
           </div>
         </div>

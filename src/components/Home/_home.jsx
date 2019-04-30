@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Search from '../Home/search';
 import Favorites from '../Home/favorites';
-import SearchResult from '../Home/search_result'
+import SearchResult from '../Home/search_result';
 
 class _home extends Component {
  

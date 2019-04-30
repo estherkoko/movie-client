@@ -25,7 +25,7 @@ class home extends Component {
 
   }
   componentDidMount() {
-    fetch('http://localhost:4567/api/v1/')
+    fetch('https://gentle-temple-25159.herokuapp.com/api/v1/movies')
       .then(response => response.json())
       .then(movies => {
         this.setState({ movies })
@@ -145,7 +145,7 @@ class home extends Component {
     );
 
     return (
-      <div className="container m-5 mx-auto pt-5 text-center" >
+      <div className="search-bg">
         <img src={Video} alt="video" className="pb-4" height="100px" />
         <div className="w-75 mx-auto pb-3">
           <h5>Hey there, welcome to SceneMax! I am your new and improved movie search portal.</h5>

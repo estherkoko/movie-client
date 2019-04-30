@@ -12,7 +12,7 @@ class favorites extends Component {
     }
 
     getAllMovies() {
-        fetch('http://localhost:4567/api/v1/movies')
+        fetch('https://gentle-temple-25159.herokuapp.com/api/v1/movies')
             .then(response => response.json())
             .then(movies => {
                 this.setState({ movies });
