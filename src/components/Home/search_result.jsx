@@ -31,10 +31,10 @@ class home extends Component {
 
   toggle() {
     this.setState(prevState => ({
-     modal: !prevState.modal
+      modal: !prevState.modal
     }));
   }
-  
+
   handleSubmit(event) {
     this.getMovieByTitle(this.state.movieName.toLowerCase());
     event.preventDefault();
@@ -101,8 +101,9 @@ class home extends Component {
         this.setState({ movieData });
         if (movieData.rating) {
           this.setState(
-            { rating: movieData.rating, 
-              comment: movieData.comment, 
+            {
+              rating: movieData.rating,
+              comment: movieData.comment,
               isNewMovie: false
             }
           );
@@ -163,9 +164,7 @@ class home extends Component {
         <div className={hasMovie ? '' : 'd-none'}>
           <div className="row" >
             <div className="col-md-4">
-              <img src={this.state.img} alt="poster" class="img-fluid"/>
-              <button className="btn btn-lg btn-dark text-white type mt-3 px-5 pt-2" onClick={this.handleUpdate}>{isNewMovie ? 'Save' : 'Update'} Movie</button>
-              <button className="btn btn-lg btn-dark text-white type mt-3 px-5 pt-2" onClick={this.handleDeleteMovies}>Delete Movie</button>
+              <img src={this.state.img} alt="poster" class="img-fluid" />
             </div>
             <div className="col-md-8 text-left">
               <h2 className="capitalize">{this.state.movieData.Title}<span onClick={this.handleDeleteMovies}><img src={Bin} alt="bin" height="25px" /></span></h2>
@@ -175,6 +174,14 @@ class home extends Component {
                 <h4 className="text-muted">Other Details:</h4>
                 <input type="text" className="form-control mb-3" value={this.state.rating} placeholder="Ratings" onChange={this.handleInputChange('rating')} />
                 <textarea className="form-control pb-5" aria-label="With textarea" type="text" value={this.state.comment} placeholder="Comments" onChange={this.handleInputChange('comment')}></textarea>
+                <div className="row">
+                  <div className="col-md-6">
+                    <button className="btn btn-lg btn-dark text-white type mt-3 pt-2" onClick={this.handleUpdate}>{isNewMovie ? 'Save' : 'Update'} Movie</button>
+                  </div>
+                  <div className="col-md-6">
+                    <button className="btn btn-lg btn-danger text-white type mt-3 ml-2 pt-2" onClick={this.handleDeleteMovies}>Delete Movie</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
