@@ -11,21 +11,11 @@ class search extends Component {
             movieName: '',
             img: NoPoster,
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+     
     }
 
-    handleSubmit(event) {
-        this.getMovieByTitle(this.state.movieName.toLowerCase());
-        event.preventDefault();
-    }
-    handleInputChange(property) {
-        return e => {
-            this.setState({
-                [property]: e.target.value
-            });
-        };
-    }
+ 
+  
     getMovieByTitle(title) {
         fetch('http://localhost:4567/api/v1/movie-search/' + title)
             .then(response => response.json())
@@ -60,16 +50,7 @@ class search extends Component {
                     <h5>What Can I Do? Glad you asked :).</h5>
                     <h5>I can help you fetch any movie you like and details. As a bonus, you can review the movie and add it to your rated movies list</h5>
                 </div>
-                <form >
-                    <div class="input-group mb-3 pb-3">
-                        <input className="form-control py-2 pt-4 pb-4 pr-6 border-right-0 border" value={this.state.movieName} onChange={this.handleInputChange('movieName')} placeholder="Find a movie" type="search" />
-                        <span className="input-group-append">
-                            <button className="btn btn-outline-secondary border-left-0 border" type="button" onClick={this.handleSubmit} >
-                                <i className="fa fa-search fa-lg"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
+              
             </div>
         );
     }

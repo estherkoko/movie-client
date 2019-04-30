@@ -8,17 +8,21 @@ class favorites extends Component {
         }
     };
     componentDidMount() {
-        fetch('http://localhost:4567/api/v1/')
+        this.getAllMovies();
+    }
+
+    getAllMovies() {
+        fetch('http://localhost:4567/api/v1/movies')
             .then(response => response.json())
             .then(movies => {
-                this.setState({ movies })
-                console.log('this.states.movies')
+                this.setState({ movies });
+                console.log(this.state.movies);
             });
     }
 
     render() {
         const movieLists = this.state.movies.map((movie) =>
-            <div className="col-md-4" key={movie.Title}>
+            <div className="col-md-4" key={movie._id}>
                 <img src={movie.Poster} height="350px" />
                 <h4 className="capitalize pt-3 text--muted">{movie.Title}</h4>
             </div>
