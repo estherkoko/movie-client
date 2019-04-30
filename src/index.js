@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './index.css';
 import './App.scss';
-import Movie from './home'
+import Movie from './components/Home/_home'
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
