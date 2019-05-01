@@ -170,12 +170,12 @@ class home extends Component {
             <div className="col-md-4">
               <img src={this.state.img} alt="poster" class="img-fluid" />
             </div>
-            <div className="col-md-8 text-left">
+            <div className="col-md-8 text-left" id="movie-details">
               <h2 className="capitalize">{this.state.movieData.Title}</h2>
-              <h5 className="text-dark w-75">{this.state.movieData.Plot}</h5>
+              <h5 className="text-dark w-75" id="movie-plot">{this.state.movieData.Plot}</h5>
               <h5>Released On:<span className="text-muted"> {this.state.movieData.Year}</span> </h5>
               <h5 className="text-muted">{this.state.movieData.comments}</h5>
-              <div className="w-50 pt-5">
+              <div className="w-50 pt-5" id="review">
                 <h4 className="text-muted">Other Details:</h4>
                 <input type="text" className="form-control mb-3" value={this.state.rating} placeholder="Ratings" onChange={this.handleInputChange('rating')} />
                 <textarea className="form-control pb-5" aria-label="With textarea" type="text" value={this.state.comment} placeholder="Comments" onChange={this.handleInputChange('comment')}></textarea>
