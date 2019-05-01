@@ -23,7 +23,7 @@ class favorites extends Component {
     render() {
         const movieLists = this.state.movies.map((movie) =>
             <div className="col-md-4" key={movie._id}>
-                <img src={movie.Poster} height="350px" />
+                <img src={movie.Poster} height="350px" alt="poster"/>
                 <h4 className="capitalize pt-3 text--muted">{movie.Title}</h4>
             </div>
 

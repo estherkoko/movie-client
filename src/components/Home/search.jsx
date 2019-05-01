@@ -50,8 +50,8 @@ class search extends Component {
                     <h5>What Can I Do? Glad you asked :).</h5>
                     <h5>I can help you fetch any movie you like and details. As a bonus, you can review the movie and add it to your rated movies list</h5>
                 </div>
-              
             </div>
+
         );
     }
 }

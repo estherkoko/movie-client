@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Bin from './../../assets/images/bin.png';
 import NoPoster from './../../assets/images/poster.png';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 class home extends Component {
 
@@ -159,7 +158,10 @@ class home extends Component {
                 <i className="fa fa-search fa-lg"></i>
               </button>
             </span>
+
           </div>
+          <button className="btn btn-lg btn-light text-primary type mr-2 pt-1" onClick={this.handleDeleteMovies}>Search Movie</button>
+
         </form>
         <div className={hasMovie ? '' : 'd-none'}>
           <div className="row" >
@@ -167,20 +169,17 @@ class home extends Component {
               <img src={this.state.img} alt="poster" class="img-fluid" />
             </div>
             <div className="col-md-8 text-left">
-              <h2 className="capitalize">{this.state.movieData.Title}<span onClick={this.handleDeleteMovies}><img src={Bin} alt="bin" height="25px" /></span></h2>
-              <h5 className="text-muted w-75">{this.state.movieData.Plot} <span className="text-primary"> {this.state.movieData.Year}</span></h5>
+              <h2 className="capitalize">{this.state.movieData.Title}</h2>
+              <h5 className="text-dark w-75">{this.state.movieData.Plot}</h5>
+              <h5>Released On:<span className="text-muted"> {this.state.movieData.Year}</span> </h5>
               <h5 className="text-muted">{this.state.movieData.comments}</h5>
               <div className="w-50 pt-5">
                 <h4 className="text-muted">Other Details:</h4>
                 <input type="text" className="form-control mb-3" value={this.state.rating} placeholder="Ratings" onChange={this.handleInputChange('rating')} />
                 <textarea className="form-control pb-5" aria-label="With textarea" type="text" value={this.state.comment} placeholder="Comments" onChange={this.handleInputChange('comment')}></textarea>
-                <div className="row">
-                  <div className="col-md-6">
-                    <button className="btn btn-lg btn-dark text-white type mt-3 pt-2" onClick={this.handleUpdate}>{isNewMovie ? 'Save' : 'Update'} Movie</button>
-                  </div>
-                  <div className="col-md-6">
-                    <button className="btn btn-lg btn-danger text-white type mt-3 ml-2 pt-2" onClick={this.handleDeleteMovies}>Delete Movie</button>
-                  </div>
+                <div>
+                  <button className="btn btn-lg btn-dark text-white type mt-3 pt-2 mr-3" onClick={this.handleUpdate}>{isNewMovie ? 'Save' : 'Update'} Movie</button>
+                  <button className="btn btn-lg btn-danger text-white type mt-3 mr-2 pt-2" onClick={this.handleDeleteMovies}>Delete Movie</button>
                 </div>
               </div>
             </div>

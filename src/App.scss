@@ -1,6 +1,6 @@
 $font-family-sans-serif:  "Poppins", Helvetica, Arial, sans-serif !default;
 $font-size-base: 0.80rem !default;
-
+$primary: #000000;
 
 @import "~bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
@@ -11,4 +11,7 @@ $font-size-base: 0.80rem !default;
 }
 .input-group-text{
     background-color: red
+}
+.text-primary{
+    color: $primary!important
 }
