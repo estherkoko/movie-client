@@ -88,7 +88,10 @@ class home extends Component {
       .then(response => {
         console.log(response);
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    this.modalHandler(true, 5000, "Movie was successfully updated in the database");
     console.log(JSON.stringify(data));
     event.preventDefault();
   }
@@ -137,7 +140,8 @@ class home extends Component {
         console.log(response);
       })
       .catch(error => console.error('Error:', error));
-    console.log(JSON.stringify(data), 'hello');
+      this.modalHandler(true, 5000, "Movie was successfully deleted");
+      console.log(JSON.stringify(data));
   }
 
   render() {
@@ -154,17 +158,15 @@ class home extends Component {
           <div className="input-group mb-3 pb-3">
             <input className="form-control py-2 pt-4 pb-4 pr-6 border-right-0 border" value={this.state.movieName} onChange={this.handleInputChange('movieName')} placeholder="Find a movie" type="search" />
             <span className="input-group-append">
-              <button className="btn btn-outline-secondary border-left-0 border" type="button" value="Submit">
+              <button className="btn btn-outline-secondary border-left-0 border" type="button" onClick={this.handleSubmit}>
                 <i className="fa fa-search fa-lg"></i>
               </button>
             </span>
-
           </div>
-          <button className="btn btn-lg btn-light text-primary type mr-2 pt-1" onClick={this.handleDeleteMovies}>Search Movie</button>
-
+          <button className="btn btn-lg btn-light text-primary type mr-2 pt-2" onClick={this.handleSubmit}>Search Movie</button>
         </form>
         <div className={hasMovie ? '' : 'd-none'}>
-          <div className="row" >
+          <div className="row mt-4" >
             <div className="col-md-4">
               <img src={this.state.img} alt="poster" class="img-fluid" />
             </div>

@@ -1,46 +1,10 @@
 import React, { Component } from 'react';
 import Video from './../../assets/images/video.png';
-import NoPoster from './../../assets/images/poster.png';
 
 
 class search extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            movieName: '',
-            img: NoPoster,
-        };
-     
-    }
-
- 
   
-    getMovieByTitle(title) {
-        fetch('https://gentle-temple-25159.herokuapp.com/api/v1/movie-search/' + title)
-            .then(response => response.json())
-            .then(movieData => {
-                this.setState({ movieData });
-                if (movieData.rating) {
-                    this.setState({ rating: movieData.rating, comment: movieData.comment });
-                } else {
-                    this.setState(
-                        {
-                            rating: '',
-                            comment: '',
-                        }
-                    );
-                }
-                if (movieData.Poster === "N/A") {
-                    this.setState({ img: NoPoster })
-                }
-                if (movieData.Poster !== "N/A") {
-                    this.setState({ img: movieData.Poster })
-                }
-                console.log(this.state.movieData);
-            });
-    }
-    
+
     render() {
         return (
             <div>
